@@ -1,4 +1,4 @@
-# Blog_app_-Back-end-
+# Blog_app (Back-end)
 
 ### Backend
 - In Spring-boot (Java)
