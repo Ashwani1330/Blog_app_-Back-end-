@@ -1,24 +1,22 @@
 package com.bcknd.blogapp.users;
 
 import com.bcknd.blogapp.users.dtos.CreateUserRequest;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService {
     private final UsersRepository usersRepository;
+    private final ModelMapper modelMapper;
 
-    public UsersService(UsersRepository usersRepository) {
+    public UsersService(UsersRepository usersRepository, ModelMapper modelMapper) {
         this.usersRepository = usersRepository;
+        this.modelMapper = modelMapper;
     }
 
-    public UserEntity createUser(CreateUserRequest req) {
-        var newUser = UserEntity.builder()
-                .username(req.getUsername())
-//                    .password(password)  // TODO: encrypt password
-                .email(req.getEmail())
-                .build();
+    public UserEntity createUser(CreateUserRequest u) {
+        UserEntity newUser = modelMapper.map(u, UserEntity.class);
+        // TODO: encrypt and save password as well
 
         return usersRepository.save(newUser);
     }
